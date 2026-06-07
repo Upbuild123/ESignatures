@@ -12,19 +12,12 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
-const ARIEL_EMAIL = process.env.ARIEL_EMAIL || 'hari@upbuild.com';
-const ARIEL_NAME = 'Ariel Weiss';
-
 const TEMPLATE_MAP = {
-  uct_payment_plan: path.join(__dirname, 'templates', 'uct_payment_plan.docx'),
   coaching_agreement: path.join(__dirname, 'templates', 'coaching_agreement.docx'),
-  services_agreement: path.join(__dirname, 'templates', 'services_agreement.docx'),
 };
 
 const DOCUMENT_LABELS = {
-  uct_payment_plan: 'UCT Payment Plan',
   coaching_agreement: 'Coaching Agreement',
-  services_agreement: 'Leadership Coaching Proposal',
 };
 
 function readView(name) {
@@ -91,39 +84,12 @@ app.post('/send', async (req, res) => {
   const clientFirstName = clientName.split(' ')[0];
 
   let variables;
-  if (documentType === 'uct_payment_plan') {
-    variables = {
-      participantFullName: clientName,
-      participantFirstName: clientFirstName,
-      startMonth: fields.startMonth,
-      endMonth: fields.endMonth,
-      upfrontAmount: fields.upfrontAmount,
-      monthlyAmount: fields.monthlyAmount,
-      totalAmount: fields.totalAmount,
-    };
-  } else if (documentType === 'coaching_agreement') {
+  if (documentType === 'coaching_agreement') {
     variables = {
       clientFirstName,
       clientFullName: clientName,
       feePerSession: fields.feePerSession,
       coachName: fields.coachName,
-    };
-  } else if (documentType === 'services_agreement') {
-    variables = {
-      clientFirstName,
-      clientFullName: clientName,
-      companyName: fields.companyName,
-      date: fields.date,
-      coachName: fields.coachNameSA,
-      hourlyRate: fields.hourlyRate,
-      dayRate: fields.dayRate,
-      kickoffFee: fields.kickoffFee,
-      executiveMonthlyRate: fields.executiveMonthlyRate,
-      executiveTotal: fields.executiveTotal,
-      ceoTotal: fields.ceoTotal,
-      cohortSessionRate: fields.cohortSessionRate,
-      cohortTotal: fields.cohortTotal,
-      grandTotal: fields.grandTotal,
     };
   } else {
     return res.status(400).send(renderSend(flashHtml('error', 'Unknown document type.')));
@@ -138,9 +104,6 @@ app.post('/send', async (req, res) => {
 
   const filename = `${documentType}_${Date.now()}.docx`;
   const signers = [{ name: clientName, email: clientEmail }];
-  if (documentType === 'services_agreement') {
-    signers.push({ name: ARIEL_NAME, email: ARIEL_EMAIL });
-  }
 
   let envelopeId;
   try {

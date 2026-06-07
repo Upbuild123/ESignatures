@@ -21,6 +21,7 @@
     "pizzip": "^3.2.0"
   },
   "devDependencies": {
+    "docx": "^9.7.1",
     "jest": "^30.4.2"
   }
 }
