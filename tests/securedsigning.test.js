@@ -8,9 +8,9 @@ process.env.SECURED_SIGNING_TOKEN_URL = 'https://api.securedsigning.com/oauth/to
 process.env.SECURED_SIGNING_API_BASE = 'https://api.securedsigning.com';
 
 describe('getToken', () => {
-  test('returns CLIENT_ID directly as token', async () => {
+  test('returns null (auth is per-request via HMAC headers)', async () => {
     const token = await getToken();
-    expect(token).toBe('test-id');
+    expect(token).toBeNull();
   });
 });
 
