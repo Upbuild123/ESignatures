@@ -8,15 +8,9 @@ process.env.SECURED_SIGNING_TOKEN_URL = 'https://api.securedsigning.com/oauth/to
 process.env.SECURED_SIGNING_API_BASE = 'https://api.securedsigning.com';
 
 describe('getToken', () => {
-  test('returns access_token from response', async () => {
-    axios.post.mockResolvedValueOnce({ data: { access_token: 'tok-abc' } });
+  test('returns CLIENT_ID directly as token', async () => {
     const token = await getToken();
-    expect(token).toBe('tok-abc');
-    expect(axios.post).toHaveBeenCalledWith(
-      'https://www.securedsigning.com/api/oauth2/token',
-      expect.objectContaining({ grant_type: 'client_credentials' }),
-      expect.any(Object)
-    );
+    expect(token).toBe('test-id');
   });
 });
 
