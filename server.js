@@ -37,11 +37,11 @@ function renderDashboard(flash = '') {
     ? '<tr><td colspan="5" style="text-align:center;color:#999">No documents sent yet.</td></tr>'
     : records.map(r => `
       <tr>
-        <td>${DOCUMENT_LABELS[r.document_type] || r.document_type}</td>
-        <td>${r.client_name}</td>
-        <td>${r.client_email}</td>
-        <td>${r.created_at}</td>
-        <td><span class="badge ${r.status}">${r.status}</span></td>
+        <td>${esc(DOCUMENT_LABELS[r.document_type] || r.document_type)}</td>
+        <td>${esc(r.client_name)}</td>
+        <td>${esc(r.client_email)}</td>
+        <td>${esc(r.created_at)}</td>
+        <td><span class="badge ${esc(r.status)}">${esc(r.status)}</span></td>
       </tr>`).join('');
   return readView('dashboard.html')
     .replace('{{FLASH}}', flash)
@@ -54,6 +54,14 @@ function renderSend(flash = '') {
 
 function flashHtml(type, msg) {
   return `<div class="flash ${type}">${msg}</div>`;
+}
+
+function esc(str) {
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
 }
 
 // Dashboard — single handler, supports ?sent=1 flash
@@ -117,6 +125,8 @@ app.post('/send', async (req, res) => {
       cohortTotal: fields.cohortTotal,
       grandTotal: fields.grandTotal,
     };
+  } else {
+    return res.status(400).send(renderSend(flashHtml('error', 'Unknown document type.')));
   }
 
   let docBuffer;
