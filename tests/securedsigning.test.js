@@ -13,7 +13,7 @@ describe('getToken', () => {
     const token = await getToken();
     expect(token).toBe('tok-abc');
     expect(axios.post).toHaveBeenCalledWith(
-      'https://api.securedsigning.com/oauth/token',
+      'https://www.securedsigning.com/api/oauth2/token',
       expect.objectContaining({ grant_type: 'client_credentials' }),
       expect.any(Object)
     );
@@ -21,16 +21,16 @@ describe('getToken', () => {
 });
 
 describe('uploadDocument', () => {
-  test('returns documentId from API response', async () => {
-    axios.post.mockResolvedValueOnce({ data: { documentId: 'doc-123' } });
+  test('returns Reference from API response', async () => {
+    axios.post.mockResolvedValueOnce({ data: { Reference: 'doc-123' } });
     const id = await uploadDocument('tok-abc', Buffer.from('fake'), 'test.docx');
     expect(id).toBe('doc-123');
   });
 });
 
 describe('createInvitation', () => {
-  test('returns envelopeId from API response', async () => {
-    axios.post.mockResolvedValueOnce({ data: { envelopeId: 'env-xyz' } });
+  test('returns PackageReference from API response', async () => {
+    axios.post.mockResolvedValueOnce({ data: { PackageReference: 'env-xyz' } });
     const signers = [{ name: 'Kavi Gupta', email: 'kavi@example.com' }];
     const id = await createInvitation('tok-abc', 'doc-123', signers);
     expect(id).toBe('env-xyz');
