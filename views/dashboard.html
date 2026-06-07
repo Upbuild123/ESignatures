@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Upbuild E-Sign — Dashboard</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<div class="container">
+  <nav><a href="/">Dashboard</a><a href="/send">Send Document</a></nav>
+  <h1>Sent Documents</h1>
+  {{FLASH}}
+  <table>
+    <thead>
+      <tr><th>Document</th><th>Client</th><th>Email</th><th>Sent</th><th>Status</th></tr>
+    </thead>
+    <tbody>
+      {{ROWS}}
+    </tbody>
+  </table>
+</div>
+</body>
+</html>

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Upbuild E-Sign — Send Document</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<div class="container">
+  <nav><a href="/">Dashboard</a><a href="/send">Send Document</a></nav>
+  <h1>Send Document for Signature</h1>
+  {{FLASH}}
+  <form method="POST" action="/send">
+    <div class="field">
+      <label for="documentType">Document Type</label>
+      <select id="documentType" name="documentType" required onchange="showFields(this.value)">
+        <option value="">— Select —</option>
+        <option value="uct_payment_plan">UCT Payment Plan Agreement</option>
+        <option value="coaching_agreement">Coaching Agreement</option>
+        <option value="services_agreement">Leadership Coaching Proposal</option>
+      </select>
+    </div>
+
+    <div class="field">
+      <label for="clientName">Client Full Name</label>
+      <input type="text" id="clientName" name="clientName" required placeholder="Amanda Paul">
+    </div>
+
+    <div class="field">
+      <label for="clientEmail">Client Email</label>
+      <input type="email" id="clientEmail" name="clientEmail" required placeholder="client@example.com">
+    </div>
+
+    <!-- UCT Payment Plan fields -->
+    <div id="fields-uct_payment_plan" class="field-group">
+      <div class="field"><label>Course Start Month</label><input type="text" name="startMonth" placeholder="October, 2026"></div>
+      <div class="field"><label>End Month</label><input type="text" name="endMonth" placeholder="March, 2027"></div>
+      <div class="field"><label>Upfront Amount</label><input type="text" name="upfrontAmount" placeholder="$400"></div>
+      <div class="field"><label>Monthly Amount</label><input type="text" name="monthlyAmount" placeholder="$400"></div>
+      <div class="field"><label>Total Amount</label><input type="text" name="totalAmount" placeholder="$4800"></div>
+    </div>
+
+    <!-- Coaching Agreement fields -->
+    <div id="fields-coaching_agreement" class="field-group">
+      <div class="field"><label>Fee Per Session</label><input type="text" name="feePerSession" placeholder="$650/session"></div>
+      <div class="field"><label>Coach Name</label><input type="text" name="coachName" placeholder="Rasanath Das"></div>
+    </div>
+
+    <!-- Services Agreement fields -->
+    <div id="fields-services_agreement" class="field-group">
+      <div class="field"><label>Company Name</label><input type="text" name="companyName" placeholder="Cast &amp; Crew"></div>
+      <div class="field"><label>Proposal Date</label><input type="text" name="date" placeholder="January 9, 2026"></div>
+      <div class="field"><label>Coach Name</label><input type="text" name="coachNameSA" placeholder="Vipin"></div>
+      <div class="field"><label>Hourly Rate</label><input type="text" name="hourlyRate" placeholder="$1,200"></div>
+      <div class="field"><label>Day Rate</label><input type="text" name="dayRate" placeholder="$10,000"></div>
+      <div class="field"><label>Kickoff Fee</label><input type="text" name="kickoffFee" placeholder="$5,000"></div>
+      <div class="field"><label>Executive Monthly Rate</label><input type="text" name="executiveMonthlyRate" placeholder="$1,200/month"></div>
+      <div class="field"><label>Executive Total</label><input type="text" name="executiveTotal" placeholder="$67,200"></div>
+      <div class="field"><label>CEO Total</label><input type="text" name="ceoTotal" placeholder="$24,000"></div>
+      <div class="field"><label>Cohort Session Rate</label><input type="text" name="cohortSessionRate" placeholder="$3,000/session"></div>
+      <div class="field"><label>Cohort Total</label><input type="text" name="cohortTotal" placeholder="$24,000"></div>
+      <div class="field"><label>Grand Total</label><input type="text" name="grandTotal" placeholder="$150,000"></div>
+    </div>
+
+    <button type="submit" class="btn">Send for Signature</button>
+  </form>
+</div>
+<script>
+function showFields(type) {
+  document.querySelectorAll('.field-group').forEach(el => el.classList.remove('active'));
+  if (type) {
+    const group = document.getElementById('fields-' + type);
+    if (group) group.classList.add('active');
+  }
+}
+// Show fields for pre-selected type on page load (e.g. after validation error)
+const sel = document.getElementById('documentType');
+if (sel.value) showFields(sel.value);
+</script>
+</body>
+</html>
