@@ -37,7 +37,7 @@ test('updateStatus changes status for matching envelope_id', () => {
 test('list returns all records newest first', () => {
   const all = db.list();
   expect(all.length).toBeGreaterThanOrEqual(2);
-  expect(all[0].created_at >= all[1].created_at || true).toBe(true);
+  expect(all[0].created_at >= all[1].created_at).toBe(true);
 });
 
 test('updateStatus on unknown envelope_id does nothing and does not throw', () => {
