@@ -112,6 +112,10 @@ app.post('/send', async (req, res) => {
     envelopeId = await createInvitation(token, documentId, signers);
   } catch (err) {
     console.error('Secured Signing error:', err.message);
+    if (err.response) {
+      console.error('Response status:', err.response.status);
+      console.error('Response data:', JSON.stringify(err.response.data));
+    }
     return res.status(502).send(renderSend(flashHtml('error', 'Failed to send document — please try again.')));
   }
 
