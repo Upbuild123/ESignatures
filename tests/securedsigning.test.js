@@ -1,6 +1,6 @@
 jest.mock('axios');
 const axios = require('axios');
-const { getToken, uploadDocument, createInvitation } = require('../lib/securedsigning');
+const { getToken, uploadDocument, createInvitation, assertEnvVars } = require('../lib/securedsigning');
 
 process.env.SECURED_SIGNING_CLIENT_ID = 'test-id';
 process.env.SECURED_SIGNING_CLIENT_SECRET = 'test-secret';
@@ -34,5 +34,14 @@ describe('createInvitation', () => {
     const signers = [{ name: 'Kavi Gupta', email: 'kavi@example.com' }];
     const id = await createInvitation('tok-abc', 'doc-123', signers);
     expect(id).toBe('env-xyz');
+  });
+});
+
+describe('assertEnvVars', () => {
+  test('getToken throws when CLIENT_ID is missing', async () => {
+    const saved = process.env.SECURED_SIGNING_CLIENT_ID;
+    delete process.env.SECURED_SIGNING_CLIENT_ID;
+    await expect(getToken()).rejects.toThrow('Missing required env var: SECURED_SIGNING_CLIENT_ID');
+    process.env.SECURED_SIGNING_CLIENT_ID = saved;
   });
 });
