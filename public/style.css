@@ -19,5 +19,6 @@ form { background: #fff; padding: 2rem; border-radius: 6px; max-width: 600px; }
 .field { margin-bottom: 1.25rem; }
 label { display: block; font-weight: 500; margin-bottom: .3rem; font-size: .9rem; }
 input, select { width: 100%; padding: .5rem .75rem; border: 1px solid #ccc; border-radius: 4px; font-size: .95rem; }
+input:focus, select:focus { outline: 2px solid #4a6cf7; outline-offset: 1px; border-color: #4a6cf7; }
 .field-group { display: none; }
 .field-group.active { display: block; }
