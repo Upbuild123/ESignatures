@@ -88,7 +88,7 @@ app.post('/send', async (req, res) => {
     variables = {
       clientFirstName,
       clientFullName: clientName,
-      feePerSession: fields.feePerSession,
+      feePerSession: `$${fields.feePerSession} per session`,
       coachName: fields.coachName,
     };
   } else {

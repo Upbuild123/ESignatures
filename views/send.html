@@ -24,13 +24,13 @@
     </div>
 
     <div class="field">
-      <label for="feePerSession">Fee Per Session</label>
-      <input type="text" id="feePerSession" name="feePerSession" required placeholder="$650/session">
+      <label for="feePerSession">Fee Per Session ($)</label>
+      <input type="number" id="feePerSession" name="feePerSession" required placeholder="650" min="0">
     </div>
 
     <div class="field">
       <label for="coachName">Coach Name</label>
-      <input type="text" id="coachName" name="coachName" required placeholder="Rasanath Das">
+      <input type="text" id="coachName" name="coachName" required value="Rasanath Das">
     </div>
 
     <button type="submit" class="btn">Send for Signature</button>
